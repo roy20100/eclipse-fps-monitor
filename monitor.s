@@ -303,19 +303,23 @@ run:
 	// Set the start address
 	MOV 2, 0
 	ELEF 1, CMD_REG_SR | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
 	// Set to run
 	ELEF 0, FN_START
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
 run_wait:
 	ELEF 1, CMD_REG_FN | CMD_PIO
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DIB 0, FPU
+	EJSR dbg_prt_ac_r
 
 	ANDI 0, FN_STOP
 	MOV 0, 0, SNR
@@ -417,12 +421,14 @@ depmem:
 	IORI 0, FN_EXAM
 
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
 	ELEF 1, CMD_REG_LT | CMD_PIO
 	DOA 1, FPU
 	DIB 0, FPU
+	EJSR dbg_prt_ac_r
 
 	STA 0, 3, 3
 
@@ -431,11 +437,13 @@ depmem:
 	IORI 0, FN_DEP
 
 	ELEF 1, CMD_REG_SR | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
 	LDA 0, 2, 3
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
@@ -504,39 +512,46 @@ depmem_write_64:
 	// Write the value out
 	POP 0, 0
 	ELEF 1, CMD_REG_SR | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
 	LDA 0, 4, 3
 	IORI 0, FN_DEP
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
 	POP 0, 0
 	ELEF 1, CMD_REG_SR | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
 	LDA 0, 4, 3
 	IORI 0, FN_DEP | FN_WORD1
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
 	POP 0, 0
 	ELEF 1, CMD_REG_SR | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
 	LDA 0, 4, 3
 	IORI 0, FN_DEP | FN_WORD2
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
 	POP 0, 0
 	ELEF 1, CMD_REG_SR | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
@@ -676,12 +691,14 @@ exammem:
 	IORI 0, FN_EXAM
 
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
 	ELEF 1, CMD_REG_LT | CMD_PIO
 	DOA 1, FPU
 	DIB 0, FPU
+	EJSR dbg_prt_ac_r
 
 	STA 0, 3, 3
 
@@ -691,11 +708,13 @@ exammem:
 	IOR 1, 0
 
 	ELEF 1, CMD_REG_SR | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
 	LDA 0, 2, 3
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
@@ -708,6 +727,7 @@ exammem_read_64:
 	LDA 0, 4, 3
 	IORI 0, FN_EXAM
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
@@ -725,6 +745,7 @@ exammem_read_64:
 	LDA 0, 4, 3
 	IORI 0, FN_EXAM | FN_WORD1
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
@@ -742,6 +763,7 @@ exammem_read_64:
 	LDA 0, 4, 3
 	IORI 0, FN_EXAM | FN_WORD2
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
@@ -761,6 +783,7 @@ exammem_read_64:
 	IOR 1, 0
 	IORI 0, FN_EXAM | FN_WORD3
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
@@ -793,11 +816,13 @@ exammem_done:
 	IORI 0, FN_DEP
 
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
 	LDA 0, 3, 3
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
@@ -875,12 +900,14 @@ dep:
 
 	// Set the switches to the value we wish to write
 	ELEF 1, CMD_REG_SR | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
 	// Write the value
 	LDA 0, 1, 3
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
@@ -926,12 +953,14 @@ exam:
 	// Write the value
 	MOV 2, 0
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
 	ELEF 1, CMD_REG_LT | CMD_PIO
 	DOA 1, FPU
 	DIB 0, FPU
+	EJSR dbg_prt_ac_r
 
 	ELEF 1, exam_result
 
@@ -1093,6 +1122,79 @@ cmdtbl_notfound:
 	RTN
 
 	var notfound_string = "Command not found\r\n" packed
+
+	var dbg_value resv 7
+	var ac0=0
+	var ac1=0
+	var ac2=0
+	var ac3=0
+    var dbgw = "dbg_w:" packed
+    var dbgr = "dbg_r:" packed
+dbg_prt_ac_w:
+	STA 0,ac0,1
+	STA 1,ac1,1
+	STA 2,ac2,1
+	STA 3,ac3,1
+	ELEF 2, dbgw
+	EJSR print
+	JMP dbg_prt_ac
+dbg_prt_ac_r:
+	STA 0,ac0,1
+	STA 1,ac1,1
+	STA 2,ac2,1
+	STA 3,ac3,1
+	ELEF 2, dbgr
+	EJSR print
+dbg_prt_ac:
+	ELEF 1, dbg_value
+	LDA 0,ac0,1
+	PSH 0, 1
+	EJSR oct_to_string
+	POP 1, 0
+	ELEF 2, dbg_value
+	EJSR print_unpacked
+	ELEF 2, space
+	EJSR print
+
+	ELEF 1, dbg_value
+	LDA 0,ac1,1
+	PSH 0, 1
+	EJSR oct_to_string
+	POP 1, 0
+	ELEF 2, dbg_value
+	EJSR print_unpacked
+	ELEF 2, space
+	EJSR print
+
+	ELEF 1, dbg_value
+	LDA 0,ac2,1
+	PSH 0, 1
+	EJSR oct_to_string
+	POP 1, 0
+	ELEF 2, dbg_value
+	EJSR print_unpacked
+	ELEF 2, space
+	EJSR print
+
+	ELEF 1, dbg_value
+	LDA 0,ac3,1
+	PSH 0, 1
+	EJSR oct_to_string
+	POP 1, 0
+	ELEF 2, dbg_value
+	EJSR print_unpacked
+	ELEF 2, space
+	EJSR print
+
+	ELEF 2, nl
+	EJSR print
+
+	LDA 0,ac0,1
+	LDA 1,ac1,1
+	LDA 2,ac2,1
+	LDA 3,ac3,1
+
+	EJMP 0,3
 
 	include "stdlib.s"
 
