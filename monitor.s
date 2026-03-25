@@ -1126,30 +1126,20 @@ cmdtbl_notfound:
 	var notfound_string = "Command not found\r\n" packed
 
 	var dbg_value resv 7
-	var ac0=0
-	var ac1=0
-	var ac2=0
-	var ac3=0
     var dbgw = "dbg_w:" packed
     var dbgr = "dbg_r:" packed
 dbg_prt_ac_w:
-	STA 0,ac0,1
-	STA 1,ac1,1
-	STA 2,ac2,1
-	STA 3,ac3,1
+	SAVE 0
 	ELEF 2, dbgw
 	EJSR print
 	JMP dbg_prt_ac
 dbg_prt_ac_r:
-	STA 0,ac0,1
-	STA 1,ac1,1
-	STA 2,ac2,1
-	STA 3,ac3,1
+	SAVE 0
 	ELEF 2, dbgr
 	EJSR print
 dbg_prt_ac:
 	ELEF 1, dbg_value
-	LDA 0,ac0,1
+	LDA 0,-4,3
 	PSH 0, 1
 	EJSR oct_to_string
 	POP 1, 0
@@ -1159,7 +1149,7 @@ dbg_prt_ac:
 	EJSR print
 
 	ELEF 1, dbg_value
-	LDA 0,ac1,1
+	LDA 0,-3,3
 	PSH 0, 1
 	EJSR oct_to_string
 	POP 1, 0
@@ -1169,7 +1159,7 @@ dbg_prt_ac:
 	EJSR print
 
 	ELEF 1, dbg_value
-	LDA 0,ac2,1
+	LDA 0,-2,3
 	PSH 0, 1
 	EJSR oct_to_string
 	POP 1, 0
@@ -1179,7 +1169,17 @@ dbg_prt_ac:
 	EJSR print
 
 	ELEF 1, dbg_value
-	LDA 0,ac3,1
+	LDA 0,-1,3
+	PSH 0, 1
+	EJSR oct_to_string
+	POP 1, 0
+	ELEF 2, dbg_value
+	EJSR print_unpacked
+	ELEF 2, space
+	EJSR print
+
+	ELEF 1, dbg_value
+	LDA 0,0,3
 	PSH 0, 1
 	EJSR oct_to_string
 	POP 1, 0
@@ -1191,12 +1191,7 @@ dbg_prt_ac:
 	ELEF 2, nl
 	EJSR print
 
-	LDA 0,ac0,1
-	LDA 1,ac1,1
-	LDA 2,ac2,1
-	LDA 3,ac3,1
-
-	EJMP 0,3
+	RTN
 
 	include "stdlib.s"
 
