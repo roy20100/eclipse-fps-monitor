@@ -316,7 +316,6 @@ run:
 
 run_wait:
 	ELEF 1, CMD_REG_FN | CMD_PIO
-	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DIB 0, FPU
 	EJSR dbg_prt_ac_r
@@ -560,6 +559,7 @@ depmem_write_64:
 	IOR 1, 0
 	IORI 0, FN_DEP | FN_WORD3
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
@@ -571,11 +571,13 @@ depmem_done:
 	IORI 0, FN_DEP
 
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
 	LDA 0, 3, 3
 	ELEF 1, CMD_REG_FN | CMD_PIO | CMD_WR
+	EJSR dbg_prt_ac_w
 	DOA 1, FPU
 	DOB 0, FPU
 
